@@ -1,0 +1,27 @@
+{
+  "rules": {
+    "firestore": {
+      "version": "2",
+      "service": "cloud.firestore",
+      "match": "/databases/{database}/documents": {
+        "match /products/{productId}": {
+          "allow read": true,
+          "allow write": "request.auth != null && request.auth.token.admin == true"
+        },
+        "match /orders/{orderId}": {
+          "allow read": "request.auth != null && (resource.data.userId == request.auth.uid || request.auth.token.admin == true)",
+          "allow create": "request.auth != null && request.resource.data.userId == request.auth.uid && request.resource.data.status == 'pending'",
+          "allow update": "request.auth != null && request.auth.token.admin == true"
+        },
+        "match /users/{userId}/purchases/{purchaseId}": {
+          "allow read": "request.auth != null && (request.auth.uid == userId || request.auth.token.admin == true)",
+          "allow write": false
+        },
+        "match /coupons/{couponId}": {
+          "allow read": true,
+          "allow write": "request.auth != null && request.auth.token.admin == true"
+        }
+      }
+    }
+  }
+}

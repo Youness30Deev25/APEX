@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر خرائط SA-MP | أفضل خرائط مابنق قراند سان اندرياس</title>
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="متجر خرائط SA-MP | أفضل خرائط مابنق قراند سان اندرياس">
+    <meta name="description" content="متجر متخصص في تقديم أفضل خرائط GTA SA-MP المجانية والمدفوعة، مابنق احترافي عالي الجودة، خرائط مقرات، أسر، حمايات، وديكورات متكاملة للسيرفرات.">
+    <meta name="keywords" content="SAMP, GTA SA, Mapping, SA-MP Maps, خرائط قراند, مابنق, سيرفرات قراند, خرائط سامب">
+    <meta name="author" content="SA-MP Mapping Store">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://samp-mapping.web.app/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://samp-mapping.web.app/">
+    <meta property="og:title" content="متجر خرائط SA-MP | أفضل خرائط مابنق احترافية">
+    <meta property="og:description" content="تصفح وحمل واستمتع بأفضل خرائط GTA SA-MP الاحترافية، خرائط مجانية ومدفوعة بجودة عالية.">
+    <meta property="og:image" content="https://samp-mapping.web.app/assets/og-image.jpg">
+
+    <!-- Twitter / X -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://samp-mapping.web.app/">
+    <meta property="twitter:title" content="متجر خرائط SA-MP | أفضل خرائط مابنق احترافية">
+    <meta property="twitter:description" content="تصفح وحمل واستمتع بأفضل خرائط GTA SA-MP الاحترافية، خرائط مجانية ومدفوعة بجودة عالية.">
+    <meta property="twitter:image" content="https://samp-mapping.web.app/assets/og-image.jpg">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Firebase SDKs (v10 Modular via CDN) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, limit, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-functions.js";
+
+        window.FirebaseSDK = {
+            initializeApp, getAuth, onAuthStateChanged, signOut,
+            signInWithEmailAndPassword, createUserWithEmailAndPassword,
+            getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, limit, addDoc,
+            getFunctions, httpsCallable
+        };
+    </script>
+</head>
+<body class="dark-theme">
+    <header class="main-header">
+        <div class="container header-container">
+            <a href="#" class="brand-logo" onclick="app.navigateTo('home')">
+                <i class="fa-solid fa-map-location-dot logo-icon"></i>
+                <div class="logo-text">
+                    <span class="primary-text">SA-MP</span>
+                    <span class="secondary-text">MAPPING</span>
+                </div>
+            </a>
+            <nav class="nav-menu" id="navMenu">
+                <a href="#home" class="nav-link active" onclick="app.navigateTo('home')"><i class="fa-solid fa-house"></i> الرئيسية</a>
+                <a href="#shop" class="nav-link" onclick="app.navigateTo('shop')"><i class="fa-solid fa-store"></i> المتجر</a>
+                <a href="#faq" class="nav-link" onclick="app.navigateTo('faq')"><i class="fa-solid fa-circle-question"></i> الأسئلة الشائعة</a>
+                <a href="https://discord.gg/samp" target="_blank" class="nav-link discord-link"><i class="fa-brands fa-discord"></i> مجتمع الديسكورد</a>
+            </nav>
+            <div class="header-actions">
+                <button class="cart-btn" onclick="cart.toggleModal()" aria-label="سلة التسوق">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </button>
+                <div class="user-action-container" id="userActionContainer">
+                    <button class="btn btn-outline-primary btn-sm" onclick="auth.openAuthModal('login')">
+                        <i class="fa-solid fa-right-to-bracket"></i> تسجيل الدخول
+                    </button>
+                </div>
+                <button class="mobile-toggle-btn" onclick="app.toggleMobileMenu()" aria-label="القائمة">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div id="alertContainer" class="alert-container"></div>
+
+    <main id="appMain">
+        <section id="homeView" class="view-section active">
+            <div class="hero-banner">
+                <div class="container hero-container">
+                    <div class="hero-content">
+                        <span class="hero-badge"><i class="fa-solid fa-fire"></i> أحدث خرائط SA-MP الحصرية</span>
+                        <h1 class="hero-title">ارتقِ بسيرفرك إلى المستوى التالي مع خرائط <span class="highlight">SA-MP</span> الإحترافية</h1>
+                        <p class="hero-subtitle">متجر متكامل يقدم أحدث وأجمل خرائط قراند سان اندرياس للمقرات، المقار الحكومية، الحمايات، والديكورات العالية الدقة مع الحفاظ على استقرار الـ FPS.</p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary btn-lg" onclick="app.navigateTo('shop')">
+                                <i class="fa-solid fa-bag-shopping"></i> تصفح المتجر الان
+                            </button>
+                            <a href="https://discord.gg/samp" target="_blank" class="btn btn-secondary btn-lg">
+                                <i class="fa-brands fa-discord"></i> انضم لسيرفر الديسكورد
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section class="section-padding bg-surface">
+                <div class="container">
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <i class="fa-solid fa-bolt feature-icon"></i>
+                            <h3>تحميل فورس وآمن</h3>
+                            <p>تحصل على خرائطك المجانية فورًا، والمدفوعة من خلال روابط آمنة ومعتمدة بعد الدفع المباشر.</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fa-solid fa-shield-halved feature-icon"></i>
+                            <h3>جودة عالية وأداء متزن</h3>
+                            <p>تم تصميم جميع الخرائط بعناية فائقة وتجربتها لضمان عدم هبوط أداء اللعبة أو الـ FPS.</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fa-solid fa-headset feature-icon"></i>
+                            <h3>دعم فني متواصل</h3>
+                            <p>فريقنا متواجد عبر الديسكورد لمساعدتك في تركيب الخرائط وحل أي مشاكل قد تواجهك.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="section-padding">
+                <div class="container">
+                    <div class="section-header">
+                        <div>
+                            <h2 class="section-title">أبرز الخرائط المتميزة</h2>
+                            <p class="section-subtitle">تشكيلة مختارة من أفضل خرائط المابنق الأكثر طلبًا</p>
+                        </div>
+                        <button class="btn btn-outline" onclick="app.navigateTo('shop')">عرض الكل <i class="fa-solid fa-arrow-left"></i></button>
+                    </div>
+                    <div class="products-grid" id="featuredProductsGrid"></div>
+                </div>
+            </section>
+        </section>
+
+        <section id="shopView" class="view-section hidden">
+            <div class="shop-header bg-surface">
+                <div class="container">
+                    <h1 class="page-title">متجر الخرائط</h1>
+                    <p class="page-subtitle">استكشف جميع الخرائط المتاحة للتحميل والتطوير</p>
+                    <div class="shop-filter-bar">
+                        <div class="search-box">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input type="text" id="shopSearchInput" placeholder="ابحث باسم الخريطة أو التصنيف..." oninput="shop.filterProducts()">
+                        </div>
+                        <div class="filter-controls">
+                            <select id="categoryFilter" class="form-select" onchange="shop.filterProducts()">
+                                <option value="all">جميع التصنيفات</option>
+                                <option value="premium">الخرائط المدفوعة</option>
+                                <option value="free">الخرائط المجانية</option>
+                                <option value="discount">العروض والخصومات</option>
+                            </select>
+                            <select id="sortOrder" class="form-select" onchange="shop.filterProducts()">
+                                <option value="newest">الأحدث أولاً</option>
+                                <option value="price-asc">السعر: من الأقل للأعلى</option>
+                                <option value="price-desc">السعر: من الأعلى للأقل</option>
+                                <option value="rating">الأعلى تقييمًا</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container section-padding">
+                <div class="products-grid" id="shopProductsGrid"></div>
+            </div>
+        </section>
+
+        <section id="productDetailsView" class="view-section hidden">
+            <div class="container section-padding" id="productDetailsContainer"></div>
+        </section>
+
+        <section id="accountView" class="view-section hidden">
+            <div class="container section-padding">
+                <div class="account-layout">
+                    <aside class="account-sidebar">
+                        <div class="user-profile-card">
+                            <div class="avatar-circle" id="userAvatar">U</div>
+                            <h3 id="userNameDisplay">المستخدم</h3>
+                            <p id="userEmailDisplay" class="text-muted">user@example.com</p>
+                            <span id="adminBadge" class="badge badge-admin hidden"><i class="fa-solid fa-user-shield"></i> مدير النظام</span>
+                        </div>
+                        <nav class="account-nav">
+                            <button class="account-nav-btn active" id="btnTabPurchases" onclick="account.switchTab('purchases')">
+                                <i class="fa-solid fa-bag-shopping"></i> مشترياتي والتحميلات
+                            </button>
+                            <button class="account-nav-btn" id="btnTabOrders" onclick="account.switchTab('orders')">
+                                <i class="fa-solid fa-receipt"></i> سجل الطلبات
+                            </button>
+                            <button id="adminTabBtn" class="account-nav-btn admin-only hidden" onclick="account.switchTab('admin')">
+                                <i class="fa-solid fa-gauge-high"></i> لوحة التحكم (Admin)
+                            </button>
+                            <button class="account-nav-btn btn-danger-soft" onclick="auth.logout()">
+                                <i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج
+                            </button>
+                        </nav>
+                    </aside>
+                    <main class="account-main-content">
+                        <div id="accountTabPurchases" class="account-tab active">
+                            <h2 class="tab-title">خرائطي المشتراة والتحميلات الآمنة</h2>
+                            <p class="tab-description">يمكنك تنزيل جميع الخرائط المدفوعة التي قمت بشرائها بنجاح في أي وقت.</p>
+                            <div id="purchasesList" class="purchases-grid"></div>
+                        </div>
+                        <div id="accountTabOrders" class="account-tab hidden">
+                            <h2 class="tab-title">سجل الطلبات</h2>
+                            <p class="tab-description">متابعة حالة جميع عمليات الشراء والطلبات السابقة.</p>
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead><tr><th>رقم الطلب</th><th>التاريخ</th><th>المبلغ الكلي</th><th>حالة الدفع</th></tr></thead>
+                                    <tbody id="ordersTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="accountTabAdmin" class="account-tab hidden">
+                            <div class="admin-header">
+                                <h2 class="tab-title"><i class="fa-solid fa-user-shield"></i> لوحة إدارة المتجر</h2>
+                                <p class="tab-description">إدارة المنتجات، التعديل عليها، مراجعة الطلبات، الإحصائيات، والكوبونات.</p>
+                            </div>
+                            <div class="admin-stats-grid" id="adminStatsGrid">
+                                <div class="stat-card">
+                                    <i class="fa-solid fa-dollar-sign stat-icon"></i>
+                                    <div><div class="stat-value" id="statSales">$0.00</div><div class="stat-label">إجمالي المبيعات</div></div>
+                                </div>
+                                <div class="stat-card">
+                                    <i class="fa-solid fa-shopping-bag stat-icon"></i>
+                                    <div><div class="stat-value" id="statPaidOrders">0</div><div class="stat-label">طلبات مدفوعة</div></div>
+                                </div>
+                                <div class="stat-card">
+                                    <i class="fa-solid fa-map stat-icon"></i>
+                                    <div><div class="stat-value" id="statProducts">0</div><div class="stat-label">عدد الخرائط</div></div>
+                                </div>
+                            </div>
+                            <div class="admin-toolbar">
+                                <button class="btn btn-primary" onclick="admin.openProductModal()"><i class="fa-solid fa-plus"></i> إضافة خريطة جديدة</button>
+                                <button class="btn btn-secondary" onclick="admin.openCouponModal()"><i class="fa-solid fa-ticket"></i> إضافة كوبون خصم</button>
+                            </div>
+                            <h3 class="section-subheading">إدارة الخرائط والمنتجات</h3>
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead><tr><th>الخريطة</th><th>النوع</th><th>السعر</th><th>الخصم</th><th>الحالة</th><th>الإجراءات</th></tr></thead>
+                                    <tbody id="adminProductsTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </section>
+
+        <section id="faqView" class="view-section hidden">
+            <div class="container section-padding">
+                <h1 class="page-title">الأسئلة الشائعة</h1>
+                <div class="faq-list">
+                    <div class="faq-item"><h3>كيف يتم تحميل الخرائط المجانية؟</h3><p>يمكنك الضغط على زر التفاصيل ثم زر التحميل المباشر للوصول لملفات الخريطة فورًا.</p></div>
+                    <div class="faq-item"><h3>كيف أحصل على الخرائط المدفوعة بعد الشراء؟</h3><p>تظهر الخرائط تلقائيًا في قائمة "مشترياتي" داخل حسابك، ويمكنك الضغط على تحميل للحصول على رابط مؤقت وآمن.</p></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal-backdrop hidden" id="cartModalBackdrop" onclick="cart.closeModalOutside(event)">
+        <div class="cart-drawer">
+            <div class="drawer-header"><h3><i class="fa-solid fa-cart-shopping"></i> سلة التسوق</h3><button class="close-btn" onclick="cart.toggleModal()">&times;</button></div>
+            <div class="drawer-body" id="cartItemsContainer"></div>
+            <div class="drawer-footer">
+                <div class="coupon-section">
+                    <div class="input-group">
+                        <input type="text" id="couponCodeInput" class="form-control" placeholder="رمز الكوبون (اختياري)">
+                        <button class="btn btn-secondary-sm" onclick="cart.applyCoupon()">تطبيق</button>
+                    </div>
+                    <div id="couponMessage" class="coupon-msg"></div>
+                </div>
+                <div class="cart-summary-rows">
+                    <div class="summary-row"><span>المجموع الفرعي:</span><span id="cartSubtotal">$0.00</span></div>
+                    <div class="summary-row text-success hidden" id="discountRow"><span>الخصم المطبق:</span><span id="cartDiscount">-$0.00</span></div>
+                    <div class="summary-row total-row"><span>المجموع الكلي:</span><span id="cartTotal">$0.00</span></div>
+                </div>
+                <button class="btn btn-primary btn-block btn-lg" id="checkoutBtn" onclick="cart.processCheckout()">إتمام الطلب والدفع <i class="fa-solid fa-credit-card"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop hidden" id="authModalBackdrop">
+        <div class="modal-card">
+            <div class="modal-header"><h3 id="authModalTitle">تسجيل الدخول</h3><button class="close-btn" onclick="auth.closeModal()">&times;</button></div>
+            <div class="modal-body">
+                <form id="authForm" onsubmit="auth.handleFormSubmit(event)">
+                    <div class="form-group" id="nameFieldGroup" style="display:none;"><label for="authNameInput">اسم المستخدم / السيرفر</label><input type="text" id="authNameInput" class="form-control" placeholder="أدخل اسمك"></div>
+                    <div class="form-group"><label for="authEmailInput">البريد الإلكتروني</label><input type="email" id="authEmailInput" class="form-control" required placeholder="name@domain.com"></div>
+                    <div class="form-group"><label for="authPasswordInput">كلمة المرور</label><input type="password" id="authPasswordInput" class="form-control" required placeholder="••••••••"></div>
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" id="authSubmitBtn">تسجيل الدخول</button>
+                </form>
+                <div class="auth-switch-text"><span id="authSwitchPrompt">ليس لديك حساب؟</span><a href="#" id="authSwitchLink" onclick="auth.toggleAuthMode(event)">إنشاء حساب جديد</a></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop hidden" id="adminProductModal">
+        <div class="modal-card modal-lg">
+            <div class="modal-header"><h3 id="productModalTitle">إضافة / تعديل خريطة</h3><button class="close-btn" onclick="admin.closeProductModal()">&times;</button></div>
+            <div class="modal-body">
+                <form id="productAdminForm" onsubmit="admin.saveProduct(event)">
+                    <input type="hidden" id="adminProductId">
+                    <div class="form-grid-2">
+                        <div class="form-group"><label>عنوان الخريطة</label><input type="text" id="adminProdTitle" class="form-control" required></div>
+                        <div class="form-group"><label>الاسم اللطيف (Slug)</label><input type="text" id="adminProdSlug" class="form-control"></div>
+                    </div>
+                    <div class="form-grid-3">
+                        <div class="form-group"><label>نوع الخريطة</label><select id="adminProdType" class="form-control" onchange="admin.togglePriceFields()"><option value="free">مجانية (Free)</option><option value="paid">مدفوعة (Paid)</option></select></div>
+                        <div class="form-group"><label>السعر (USD)</label><input type="number" step="0.01" id="adminProdPrice" class="form-control" value="0.00"></div>
+                        <div class="form-group"><label>الخصم (%)</label><input type="number" id="adminProdDiscount" class="form-control" value="0"></div>
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group"><label>رابط الصورة الرئيسية</label><input type="url" id="adminProdImage" class="form-control" required placeholder="https://..."></div>
+                        <div class="form-group"><label>معرف فيديو يوتيوب (YouTube ID)</label><input type="text" id="adminProdYoutube" class="form-control" placeholder="مثال: dQw4w9WgXcQ"></div>
+                    </div>
+                    <div class="form-grid-3">
+                        <div class="form-group"><label>عدد الأوبجكتات (Objects)</label><input type="number" id="adminProdObjects" class="form-control" value="0"></div>
+                        <div class="form-group"><label>عدد الإزالات (Removals)</label><input type="number" id="adminProdRemovals" class="form-control" value="0"></div>
+                        <div class="form-group"><label>متطلبات التشغيل</label><input type="text" id="adminProdReqs" class="form-control" placeholder="مثال: Streamer Plugin"></div>
+                    </div>
+                    <div class="form-group"><label>وصف الخريطة</label><textarea id="adminProdDesc" class="form-control" rows="4" required></textarea></div>
+                    <div class="form-group" id="freeDownloadUrlGroup"><label>رابط تحميل الخريطة المجانية (Free Download Link)</label><input type="url" id="adminProdFreeUrl" class="form-control" placeholder="https://mediafire.com/file/..."></div>
+                    <div class="form-group hidden" id="paidStoragePathGroup"><label>مسار الملف المدفوع في Firebase Storage (Paid Storage Path)</label><input type="text" id="adminProdPaidPath" class="form-control" placeholder="paid_maps/map-file-id.zip"><small class="text-muted">ملاحظة مهمة: يتم حفظ الملفات المدفوعة في مجلد خاص لا يمكن للمستخدمين الوصول إليه مباشرة.</small></div>
+                    <div class="form-checkbox-group"><label><input type="checkbox" id="adminProdFeatured"> عرض الخريطة في الأبرز (Featured)</label><label><input type="checkbox" id="adminProdActive" checked> مفعل ومتاح في المتجر</label></div>
+                    <div class="modal-footer-actions"><button type="button" class="btn btn-secondary" onclick="admin.closeProductModal()">إلغاء</button><button type="submit" class="btn btn-primary">حفظ الخريطة</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop hidden" id="adminCouponModal">
+        <div class="modal-card">
+            <div class="modal-header"><h3>إضافة كوبون خصم جديد</h3><button class="close-btn" onclick="admin.closeCouponModal()">&times;</button></div>
+            <div class="modal-body">
+                <form id="couponAdminForm" onsubmit="admin.saveCoupon(event)">
+                    <div class="form-group"><label>رمز الكوبون (Coupon Code)</label><input type="text" id="adminCouponCode" class="form-control" required placeholder="مثال: SALE50"></div>
+                    <div class="form-group"><label>نسبة الخصم (%)</label><input type="number" id="adminCouponDiscount" class="form-control" required min="1" max="100" value="10"></div>
+                    <button type="submit" class="btn btn-primary btn-block">حفظ الكوبون</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop hidden" id="reviewModal">
+        <div class="modal-card">
+            <div class="modal-header"><h3>تقييم الخريطة</h3><button class="close-btn" onclick="reviewSystem.closeModal()">&times;</button></div>
+            <div class="modal-body">
+                <form id="reviewForm" onsubmit="reviewSystem.submitReview(event)">
+                    <input type="hidden" id="reviewProductId">
+                    <div class="form-group"><label>التقييم بالنجوم</label><div class="star-rating-input">
+                        <i class="fa-star fa-regular" data-rating="1" onclick="reviewSystem.setRating(1)"></i>
+                        <i class="fa-star fa-regular" data-rating="2" onclick="reviewSystem.setRating(2)"></i>
+                        <i class="fa-star fa-regular" data-rating="3" onclick="reviewSystem.setRating(3)"></i>
+                        <i class="fa-star fa-regular" data-rating="4" onclick="reviewSystem.setRating(4)"></i>
+                        <i class="fa-star fa-regular" data-rating="5" onclick="reviewSystem.setRating(5)"></i>
+                    </div></div>
+                    <div class="form-group"><label>رأيك وتجربتك مع الخريطة</label><textarea id="reviewTextInput" class="form-control" rows="3" required placeholder="اكتب مراجعتك هنا..."></textarea></div>
+                    <button type="submit" class="btn btn-primary btn-block">إرسال التقييم</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container footer-content">
+            <div class="footer-brand"><div class="logo-text"><span class="primary-text">SA-MP</span><span class="secondary-text">MAPPING</span></div><p>المتجر الأول المتخصص في تقديم أحدث وأفضل خرائط SA-MP الاحترافية والمجانية للمجتمع العربي.</p></div>
+            <div class="footer-links"><h4>روابط سريعة</h4><ul><li><a href="#" onclick="app.navigateTo('home')">الرئيسية</a></li><li><a href="#" onclick="app.navigateTo('shop')">المتجر الكامل</a></li><li><a href="https://discord.gg/samp" target="_blank">سيرفر الديسكورد</a></li></ul></div>
+            <div class="footer-social"><h4>مجتمعنا</h4><a href="https://discord.gg/samp" target="_blank" class="btn btn-discord"><i class="fa-brands fa-discord"></i> انضم إلينا في Discord</a></div>
+        </div>
+        <div class="footer-bottom"><div class="container"><p>&copy; 2026 SA-MP Mapping Store. جميع الحقوق محفوظة.</p></div></div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
